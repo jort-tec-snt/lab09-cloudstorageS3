@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Galería de imágenes</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>Galería de imágenes</h1>
+      <p>Sube imágenes JPEG, PNG o WebP de hasta 5 MB. Se guardan en un bucket privado de Amazon S3.</p>
+    </header>
+
+    <main>
+      <section aria-labelledby="upload-title">
+        <h2 id="upload-title">Subir imagen</h2>
+        <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-describedby="drop-hint">
+          <p class="drop-main">Arrastra una imagen aquí o <span class="link-like">elige un archivo</span></p>
+          <p id="drop-hint" class="drop-hint">Pulsa Enter o Espacio para abrir el selector. JPEG, PNG o WebP, menos de 5 MB.</p>
+          <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden aria-label="Seleccionar imágenes" />
+        </div>
+        <progress id="progress" max="100" value="0" hidden aria-label="Progreso de subida"></progress>
+        <p id="status" class="status" role="status" aria-live="polite" data-type="info"></p>
+      </section>
+
+      <section aria-labelledby="gallery-title">
+        <div class="section-head">
+          <h2 id="gallery-title">Galería</h2>
+          <button id="refresh-btn" type="button" class="btn btn-secondary">Actualizar</button>
+        </div>
+        <p id="gallery-state" class="gallery-state" data-type="loading">Cargando imágenes…</p>
+        <ul id="gallery" class="grid"></ul>
+      </section>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
