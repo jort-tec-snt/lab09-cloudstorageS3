@@ -1,5 +1,6 @@
 import { uploadFile, validateFile } from './upload.js';
 import { createGallery } from './gallery.js';
+import { READ_URL_TTL_S } from './config.js';
 
 const $ = (id) => document.getElementById(id);
 const statusEl = $('status');
@@ -12,7 +13,36 @@ function setStatus(message, type = 'info') {
   statusEl.dataset.type = type;
 }
 
-const gallery = createGallery({ root: $('gallery'), stateEl: $('gallery-state'), setStatus });
+// Vigencia de los enlaces de lectura: al vencer se piden nuevos automáticamente.
+const lease = $('lease');
+let leaseEnd = 0;
+let leaseTimer = null;
+function startLease(items) {
+  clearInterval(leaseTimer);
+  if (!items.length) {
+    lease.hidden = true;
+    return;
+  }
+  leaseEnd = Date.now() + READ_URL_TTL_S * 1000;
+  lease.hidden = false;
+  const tick = () => {
+    const left = Math.max(0, Math.round((leaseEnd - Date.now()) / 1000));
+    $('lease-time').textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+    $('lease-fill').style.transform = `scaleX(${left / READ_URL_TTL_S})`;
+    lease.dataset.low = String(left <= 60);
+    if (left === 0) gallery.refresh({ quiet: true });
+  };
+  tick();
+  leaseTimer = setInterval(tick, 1000);
+}
+
+const gallery = createGallery({
+  root: $('gallery'),
+  stateEl: $('gallery-state'),
+  countEl: $('count'),
+  setStatus,
+  onLoaded: startLease,
+});
 
 let busy = false;
 

@@ -4,3 +4,5 @@ export const API_BASE = 'http://localhost:3000';
 
 export const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 export const MAX_SIZE_BYTES = 5 * 1024 * 1024;
+// Debe coincidir con la vigencia de las URLs de lectura del backend (900 s).
+export const READ_URL_TTL_S = 900;
