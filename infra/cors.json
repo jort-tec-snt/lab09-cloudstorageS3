@@ -1,9 +1,11 @@
-[
-  {
-    "AllowedHeaders": ["Content-Type"],
-    "AllowedMethods": ["PUT", "GET"],
-    "AllowedOrigins": ["http://localhost:8080", "http://localhost:3000"],
-    "ExposeHeaders": ["ETag"],
-    "MaxAgeSeconds": 3000
-  }
-]
+{
+  "CORSRules": [
+    {
+      "AllowedHeaders": ["Content-Type"],
+      "AllowedMethods": ["PUT", "GET"],
+      "AllowedOrigins": ["http://localhost:8080", "http://localhost:3000"],
+      "ExposeHeaders": ["ETag"],
+      "MaxAgeSeconds": 3000
+    }
+  ]
+}
